@@ -10,12 +10,20 @@ function generatePDF() {
     content += `${key}: ${value}\n`;
   }
 
-  doc.text(content, 10, 10);
+  const lines = doc.splitTextToSize(content, doc.internal.pageSize.getWidth() - 20);
+  doc.text(lines, 10, 10);
   doc.save("form_data.pdf");
+}
+
+function submitFormWithCheck() {
+  const form = document.getElementById("userForm");
+  if (!form.reportValidity()) return;
+  generatePDF();
 }
 
 function forwardEmail() {
   const form = document.getElementById("userForm");
+  if (!form.reportValidity()) return;
   const data = new FormData(form);
 
   const firstName = data.get("firstName") || "";
@@ -62,9 +70,8 @@ let confettiShown = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("userForm");
-  const phoneInput = form.querySelector('input[name="phone"]');
 
-  phoneInput.addEventListener("input", () => {
+  form.addEventListener("input", () => {
     if (!confettiShown && form.checkValidity()) {
       showConfetti();
       confettiShown = true;
