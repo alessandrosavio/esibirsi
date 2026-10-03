@@ -19,6 +19,30 @@ body {
   margin: auto;
 }
 
+.lang-switch {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.lang-switch button {
+  background: transparent;
+  color: #ccc;
+  border: 1px solid #3a3a3c;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.lang-switch button.active {
+  background-color: #4cd964;
+  border-color: #4cd964;
+  color: #1c1c1e;
+  font-weight: 500;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 24px;

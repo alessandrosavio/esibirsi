@@ -11,6 +11,11 @@
 </head>
 <body>
   <div class="container">
+    <div class="lang-switch">
+      <button type="button" data-set-lang="it">IT</button>
+      <button type="button" data-set-lang="en">EN</button>
+    </div>
+
     <h1>FORM</h1>
 
    <form id="userForm">
@@ -28,9 +33,9 @@
   <input type="tel" name="phone" placeholder="Phone Number" required />
 
   <div class="buttons">
-    <button type="button" onclick="submitFormWithCheck()">Create PDF</button>
-    <span class="or">or</span>
-    <button type="button" onclick="forwardEmail()">Forward via e-mail</button>
+    <button type="button" onclick="submitFormWithCheck()" data-i18n="createPdf">Create PDF</button>
+    <span class="or" data-i18n="or">or</span>
+    <button type="button" onclick="forwardEmail()" data-i18n="forwardEmail">Forward via e-mail</button>
 
   </div>
   </form>
@@ -39,14 +44,14 @@
 
 
     <div class="note">
-      <p><strong>NOTA BENE:</strong> Il pagamento è da effettuarsi <strong>solo ed esclusivamente</strong> all’IBAN della cooperativa Esibirsi, <strong>dopo aver ricevuto la fattura.</strong><br>
+      <p data-lang="it"><strong>NOTA BENE:</strong> Il pagamento è da effettuarsi <strong>solo ed esclusivamente</strong> all’IBAN della cooperativa Esibirsi, <strong>dopo aver ricevuto la fattura.</strong><br>
         <strong>IBAN:</strong> <span class="iban" onclick="copyIBAN()">IT90Y0863164860065000000730</span><br>
         <strong>Banca:</strong> 360 Credito Cooperativo FVG<br>
         <strong>BIC-SWIFT:</strong> CCRTIT2TTER<br>
         <strong>Beneficiario:</strong> Esibirsi Soc. Coop. Viale Grigoletti, 72/e – 33170 Pordenone
       </p>
 
-      <p><strong>PLEASE NOTE:</strong> Payment must be made <strong>only and exclusively</strong> to the IBAN of the Esibirsi cooperative, <strong>after receiving the invoice.</strong><br>
+      <p data-lang="en"><strong>PLEASE NOTE:</strong> Payment must be made <strong>only and exclusively</strong> to the IBAN of the Esibirsi cooperative, <strong>after receiving the invoice.</strong><br>
         <strong>IBAN:</strong> <span class="iban" onclick="copyIBAN()">IT90Y0863164860065000000730</span><br>
         <strong>Bank:</strong> 360 Credito Cooperativo FVG<br>
         <strong>BIC-SWIFT:</strong> CCRTIT2TTER<br>
