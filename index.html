@@ -1,65 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FORM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#1c1c1e" />
+  <title>Esibirsi – Form</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
 </head>
 <body>
-  <div class="container">
-    <div class="lang-switch">
+  <header class="topbar">
+    <span class="brand">Esibirsi</span>
+    <div class="lang-switch" role="group" aria-label="Language">
       <button type="button" data-set-lang="it">IT</button>
       <button type="button" data-set-lang="en">EN</button>
     </div>
+  </header>
 
-    <h1>FORM</h1>
+  <main class="container">
+    <h1 data-i18n="title">Dati per la fatturazione</h1>
+    <p class="subtitle" data-i18n="subtitle">Compila tutti i campi, poi crea il PDF o invialo via e-mail.</p>
 
-   <form id="userForm">
-  <input type="text" name="firstName" placeholder="First Name" required />
-  <input type="text" name="lastName" placeholder="Last Name" required />
-  <input type="text" name="taxCode" placeholder="Tax Code (CF)" required />
+    <form id="userForm" novalidate>
+      <section class="card">
+        <h2 data-i18n="sectionPersonal">Dati personali</h2>
+        <div class="row">
+          <div class="field">
+            <label for="firstName" data-i18n="firstName">Nome</label>
+            <input id="firstName" type="text" name="firstName" autocomplete="given-name" required />
+          </div>
+          <div class="field">
+            <label for="lastName" data-i18n="lastName">Cognome</label>
+            <input id="lastName" type="text" name="lastName" autocomplete="family-name" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="taxCode" data-i18n="taxCode">Codice Fiscale</label>
+          <input id="taxCode" type="text" name="taxCode" autocapitalize="characters" autocomplete="off" spellcheck="false" required />
+        </div>
+      </section>
 
-  <input type="text" name="country" placeholder="Country" required />
-  <input type="text" name="province" placeholder="Province" required />
-  <input type="text" name="street" placeholder="Street" required />
-  <input type="text" name="streetNumber" placeholder="Street Number" required />
-  <input type="text" name="zip" placeholder="ZIP Code" required />
+      <section class="card">
+        <h2 data-i18n="sectionAddress">Indirizzo</h2>
+        <div class="row row-street">
+          <div class="field">
+            <label for="street" data-i18n="street">Via</label>
+            <input id="street" type="text" name="street" autocomplete="address-line1" required />
+          </div>
+          <div class="field">
+            <label for="streetNumber" data-i18n="streetNumber">Numero civico</label>
+            <input id="streetNumber" type="text" name="streetNumber" required />
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="zip" data-i18n="zip">CAP</label>
+            <input id="zip" type="text" name="zip" autocomplete="postal-code" required />
+          </div>
+          <div class="field">
+            <label for="province" data-i18n="province">Provincia</label>
+            <input id="province" type="text" name="province" autocomplete="address-level1" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="country" data-i18n="country">Paese</label>
+          <input id="country" type="text" name="country" autocomplete="country-name" required />
+        </div>
+      </section>
 
-  <input type="email" name="email" placeholder="Email Address (not PEC)" required />
-  <input type="tel" name="phone" placeholder="Phone Number" required />
+      <section class="card">
+        <h2 data-i18n="sectionContacts">Contatti</h2>
+        <div class="field">
+          <label for="email" data-i18n="email">Indirizzo e-mail (non PEC)</label>
+          <input id="email" type="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required />
+        </div>
+        <div class="field">
+          <label for="phone" data-i18n="phone">Numero di telefono</label>
+          <input id="phone" type="tel" name="phone" autocomplete="tel" inputmode="tel" required />
+        </div>
+      </section>
 
-  <div class="buttons">
-    <button type="button" onclick="submitFormWithCheck()" data-i18n="createPdf">Create PDF</button>
-    <span class="or" data-i18n="or">or</span>
-    <button type="button" onclick="forwardEmail()" data-i18n="forwardEmail">Forward via e-mail</button>
+      <div class="actions">
+        <button type="button" class="btn btn-primary" onclick="submitFormWithCheck()" data-i18n="createPdf">Crea PDF</button>
+        <span class="or" data-i18n="or">oppure</span>
+        <button type="button" class="btn btn-secondary" onclick="forwardEmail()" data-i18n="forwardEmail">Invia via e-mail</button>
+      </div>
+    </form>
 
-  </div>
-  </form>
- 
+    <section class="card note">
+      <div data-lang="it">
+        <h2>Nota bene</h2>
+        <p>Il pagamento è da effettuarsi <strong>solo ed esclusivamente</strong> all’IBAN della cooperativa Esibirsi, <strong>dopo aver ricevuto la fattura.</strong></p>
+      </div>
+      <div data-lang="en">
+        <h2>Please note</h2>
+        <p>Payment must be made <strong>only and exclusively</strong> to the IBAN of the Esibirsi cooperative, <strong>after receiving the invoice.</strong></p>
+      </div>
 
+      <button type="button" class="iban" onclick="copyIBAN()">
+        <span class="iban-label">IBAN</span>
+        <span class="iban-value">IT90 Y086 3164 8600 6500 0000 730</span>
+        <span class="iban-hint" data-i18n="tapToCopy">Tocca per copiare</span>
+      </button>
 
+      <dl class="bank">
+        <dt data-i18n="bank">Banca</dt>
+        <dd>360 Credito Cooperativo FVG</dd>
+        <dt>BIC-SWIFT</dt>
+        <dd>CCRTIT2TTER</dd>
+        <dt data-i18n="beneficiary">Beneficiario</dt>
+        <dd>Esibirsi Soc. Coop.<br>Viale Grigoletti, 72/e – 33170 Pordenone</dd>
+      </dl>
+    </section>
+  </main>
 
-    <div class="note">
-      <p data-lang="it"><strong>NOTA BENE:</strong> Il pagamento è da effettuarsi <strong>solo ed esclusivamente</strong> all’IBAN della cooperativa Esibirsi, <strong>dopo aver ricevuto la fattura.</strong><br>
-        <strong>IBAN:</strong> <span class="iban" onclick="copyIBAN()">IT90Y0863164860065000000730</span><br>
-        <strong>Banca:</strong> 360 Credito Cooperativo FVG<br>
-        <strong>BIC-SWIFT:</strong> CCRTIT2TTER<br>
-        <strong>Beneficiario:</strong> Esibirsi Soc. Coop. Viale Grigoletti, 72/e – 33170 Pordenone
-      </p>
-
-      <p data-lang="en"><strong>PLEASE NOTE:</strong> Payment must be made <strong>only and exclusively</strong> to the IBAN of the Esibirsi cooperative, <strong>after receiving the invoice.</strong><br>
-        <strong>IBAN:</strong> <span class="iban" onclick="copyIBAN()">IT90Y0863164860065000000730</span><br>
-        <strong>Bank:</strong> 360 Credito Cooperativo FVG<br>
-        <strong>BIC-SWIFT:</strong> CCRTIT2TTER<br>
-        <strong>Beneficiary:</strong> Esibirsi Soc. Coop. Viale Grigoletti, 72/e – 33170 Pordenone
-      </p>
-      <p id="copy-msg">IBAN copiato!</p>
-    </div>
-  </div>
+  <div id="copy-msg" class="toast" role="status" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>
